@@ -29,9 +29,9 @@ export class AdditionComponent implements OnInit {
 
     if ((this.operand1 + this.operand2) === Number(value)) {
       this.score += 1;
-      this.messageService.add({severity: 'success', summary: 'Addition', detail: 'Correct!'});
+      this.messageService.add({severity: 'success', summary: 'Correct!'});
     } else {
-      this.messageService.add({severity: 'error', summary: 'Addition', detail: 'Sorry :('});
+      this.messageService.add({severity: 'error', summary: 'Sorry :('});
     }
 
     this.addition = this.getRandomAddition();
