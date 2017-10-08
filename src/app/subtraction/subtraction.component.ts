@@ -1,18 +1,18 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MessageService} from 'primeng/components/common/messageservice';
-import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
+import {MessageService} from "primeng/components/common/messageservice";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
-  selector: 'app-addition',
-  templateUrl: './addition.component.html',
-  styleUrls: ['./addition.component.css']
+  selector: 'app-subtraction',
+  templateUrl: './subtraction.component.html',
+  styleUrls: ['./subtraction.component.css']
 })
-export class AdditionComponent implements OnInit, OnDestroy {
+export class SubtractionComponent implements OnInit, OnDestroy {
 
   sub: Subscription;
   score: number;
-  addition: string;
+  subtraction: string;
   operand1: number;
   operand2: number;
   result: string;
@@ -33,7 +33,7 @@ export class AdditionComponent implements OnInit, OnDestroy {
 
     console.log("level: " + this.level);
 
-    this.addition = this.getRandomAddition(this.level);
+    this.subtraction = this.getRandomSubstraction(this.level);
 
   }
 
@@ -45,18 +45,18 @@ export class AdditionComponent implements OnInit, OnDestroy {
 
     console.log(value)
 
-    if ((this.operand1 + this.operand2) === Number(value)) {
+    if ((this.operand1 - this.operand2) === Number(value)) {
       this.score += 1;
       this.messageService.add({severity: 'success', summary: 'Correct!'});
     } else {
       this.messageService.add({severity: 'error', summary: 'Sorry :('});
     }
 
-    this.addition = this.getRandomAddition(this.level);
+    this.subtraction = this.getRandomSubstraction(this.level);
     this.result = '';
   }
 
-  getRandomAddition(topNumber: number): string {
+  getRandomSubstraction(topNumber: number): string {
 
     var ceiling1 = topNumber > 9 ? 10 : topNumber;
     this.operand1 = Math.floor(Math.random() * ceiling1);
@@ -64,8 +64,13 @@ export class AdditionComponent implements OnInit, OnDestroy {
     var ceiling2 = (topNumber - this.operand1) > 9 ? 10 : (topNumber - this.operand1);
     this.operand2 = Math.floor(Math.random() * ceiling2);
 
-    return this.operand1.toString() + " + " + this.operand2.toString();
+    if (this.operand1 < this.operand2) {
+      var aux = this.operand1;
+      this.operand1 =+ this.operand2;
+      this.operand2 = this.operand1 - aux;
+    }
+
+    return this.operand1.toString() + " - " + this.operand2.toString();
 
   }
-
 }
